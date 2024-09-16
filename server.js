@@ -20,9 +20,27 @@
 const http = require ('http');  
 const PORT = 5002;
 
-const server = http.createServer((req, res)=>{res.end("Hello!");});
 
-server.listen(PORT,()=>{
-    console.log(`Server is running on port ${PORT}`)
-})
+const server = http.createServer((req, res) => {
+    res.setHeader("Content-Type", "text/plain");
+
+    if (req.method === 'GET' && req.url === '/') {
+        res.writeHead(200);
+        res.end('Welcome to the Home Page');
+    } else if (req.method === 'GET' && req.url === '/about') {
+        res.writeHead(200);
+        res.end("This is about page");
+    } else if (req.method === 'GET' && req.url === "/contact") {
+        res.writeHead(200);
+        res.end("Contact us at contact@example.com");
+    } else {
+        res.writeHead(404);
+        res.end("404 Page Not Found");
+    }
+});
+
+server.listen(PORT, () => {
+    console.log(`Server is running on port ${PORT}`);
+});
+
 
